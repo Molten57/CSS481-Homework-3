@@ -1,5 +1,6 @@
 const operators = ['+', '-', '*', '/'];
 
+// adds onclick events for the number & operator buttons
 window.onload = () => {
     const numberButtons = document.querySelectorAll(".number");
     const operatorButtons = document.querySelectorAll(".operator");
@@ -13,15 +14,19 @@ window.onload = () => {
     })
 }
 
+// adds a number to the expression, based on button value
 function addNumber(button) {
     let number = button.textContent;
     document.querySelector("#display").value += number;
 }
 
+// clears the expression
 function clearDisplay() {
     document.querySelector("#display").value = "";
+    showExpressionOverlay(false);
 }
 
+// adds a operator to the expression, based on button value
 function addOperator(button) {
     let operator = button.textContent;
     let display = document.querySelector("#display")
@@ -45,6 +50,7 @@ function addOperator(button) {
     display.value = expression;
 }
 
+// evaluates the expression currently held in display
 function evaluateExpression() {
     let display = document.querySelector("#display")
     let expression = display.value;
@@ -52,5 +58,12 @@ function evaluateExpression() {
 
     if (evaluated !== undefined) {
         display.value = eval(expression);
+        showExpressionOverlay(true);
     }
+}
+
+// true for an '=' sign to be overlayed on top of expression input, false for no overlay
+function showExpressionOverlay(visible) {
+    let display = (visible) ? "inline" : "none";
+    document.querySelector(".input-overlay").style.display = display;
 }
